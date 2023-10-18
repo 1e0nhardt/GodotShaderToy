@@ -1,25 +1,46 @@
-[gd_scene load_steps=11 format=3 uid="uid://dvodfxx4ty3io"]
+[gd_scene load_steps=15 format=3 uid="uid://dvodfxx4ty3io"]
 
 [ext_resource type="Script" path="res://scenes/shader_editor.gd" id="1_8tcxs"]
 [ext_resource type="Shader" path="res://resources/main_canvas.gdshader" id="2_s3wn0"]
 [ext_resource type="PackedScene" uid="uid://b8fg05q83y28k" path="res://scenes/main_editor.tscn" id="2_xgfi2"]
 [ext_resource type="Shader" path="res://resources/bottom0.gdshader" id="3_5i16p"]
 [ext_resource type="Shader" path="res://resources/bottom1.gdshader" id="4_fp5ux"]
+[ext_resource type="Script" path="res://scenes/shader_canvas.gd" id="4_m23do"]
 [ext_resource type="Shader" path="res://resources/bottom2.gdshader" id="5_oua02"]
+
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_5pqar"]
+number_color = Color(0.631373, 1, 0.878431, 1)
+symbol_color = Color(0.560784, 0.654902, 0.827451, 1)
+function_color = Color(0.341176, 0.698039, 1, 1)
+member_variable_color = Color(0.619608, 0.733333, 0.831373, 1)
+
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_05j52"]
+number_color = Color(0.631373, 1, 0.878431, 1)
+symbol_color = Color(0.560784, 0.654902, 0.827451, 1)
+function_color = Color(0.341176, 0.698039, 1, 1)
+member_variable_color = Color(0.619608, 0.733333, 0.831373, 1)
+
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_e1iyw"]
+number_color = Color(0.631373, 1, 0.878431, 1)
+symbol_color = Color(0.560784, 0.654902, 0.827451, 1)
+function_color = Color(0.341176, 0.698039, 1, 1)
+member_variable_color = Color(0.619608, 0.733333, 0.831373, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_62icj"]
 shader = ExtResource("2_s3wn0")
+shader_parameter/mouse_pos = null
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bii4t"]
 shader = ExtResource("3_5i16p")
+shader_parameter/mouse_pos = null
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mnlls"]
 shader = ExtResource("4_fp5ux")
+shader_parameter/mouse_pos = null
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cax0a"]
 shader = ExtResource("5_oua02")
-shader_parameter/blue = null
-shader_parameter/a = null
+shader_parameter/mouse_pos = null
 
 [node name="ShaderEditor" type="Control"]
 layout_mode = 3
@@ -48,18 +69,14 @@ theme_override_constants/separation = -1
 layout_mode = 2
 theme_override_constants/separation = 1
 
-[node name="FileButton" type="MenuButton" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+[node name="FileMenu" type="MenuButton" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
 text = "文件"
 switch_on_hover = true
-item_count = 2
-popup/item_0/text = "保存当前"
-popup/item_0/id = 0
-popup/item_1/text = "保存所有"
-popup/item_1/id = 1
 
 [node name="ExampleButton" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(80, 0)
@@ -93,12 +110,30 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TabContainer" type="TabContainer" parent="HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/side_margin = 0
 
 [node name="Main" parent="HBoxContainer/VBoxContainer/TabContainer" instance=ExtResource("2_xgfi2")]
 layout_mode = 2
+
+[node name="Bottom0" parent="HBoxContainer/VBoxContainer/TabContainer" instance=ExtResource("2_xgfi2")]
+visible = false
+layout_mode = 2
+syntax_highlighter = SubResource("CodeHighlighter_5pqar")
+delimiter_strings = Array[String](["\" \"", "' '"])
+
+[node name="Bottom1" parent="HBoxContainer/VBoxContainer/TabContainer" instance=ExtResource("2_xgfi2")]
+visible = false
+layout_mode = 2
+syntax_highlighter = SubResource("CodeHighlighter_05j52")
+
+[node name="Bottom2" parent="HBoxContainer/VBoxContainer/TabContainer" instance=ExtResource("2_xgfi2")]
+visible = false
+layout_mode = 2
+syntax_highlighter = SubResource("CodeHighlighter_e1iyw")
+delimiter_strings = Array[String](["\" \"", "' '"])
 
 [node name="VSplitContainer" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
@@ -109,6 +144,7 @@ unique_name_in_owner = true
 material = SubResource("ShaderMaterial_62icj")
 custom_minimum_size = Vector2(0, 720)
 layout_mode = 2
+script = ExtResource("4_m23do")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VSplitContainer"]
 layout_mode = 2
@@ -120,18 +156,21 @@ unique_name_in_owner = true
 material = SubResource("ShaderMaterial_bii4t")
 layout_mode = 2
 size_flags_horizontal = 3
+script = ExtResource("4_m23do")
 
 [node name="BottomCanvas1" type="ColorRect" parent="HBoxContainer/VSplitContainer/HBoxContainer"]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_mnlls")
 layout_mode = 2
 size_flags_horizontal = 3
+script = ExtResource("4_m23do")
 
 [node name="BottomCanvas2" type="ColorRect" parent="HBoxContainer/VSplitContainer/HBoxContainer"]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_cax0a")
 layout_mode = 2
 size_flags_horizontal = 3
+script = ExtResource("4_m23do")
 
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/AboutButton" to="." method="_on_about_button_pressed"]
 [connection signal="close_requested" from="HBoxContainer/VBoxContainer/HBoxContainer/AboutPopupPanel" to="." method="_on_about_popup_panel_close_requested"]
