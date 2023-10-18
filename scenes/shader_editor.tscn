@@ -1,0 +1,138 @@
+[gd_scene load_steps=11 format=3 uid="uid://dvodfxx4ty3io"]
+
+[ext_resource type="Script" path="res://scenes/shader_editor.gd" id="1_8tcxs"]
+[ext_resource type="Shader" path="res://resources/main_canvas.gdshader" id="2_s3wn0"]
+[ext_resource type="PackedScene" uid="uid://b8fg05q83y28k" path="res://scenes/main_editor.tscn" id="2_xgfi2"]
+[ext_resource type="Shader" path="res://resources/bottom0.gdshader" id="3_5i16p"]
+[ext_resource type="Shader" path="res://resources/bottom1.gdshader" id="4_fp5ux"]
+[ext_resource type="Shader" path="res://resources/bottom2.gdshader" id="5_oua02"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_62icj"]
+shader = ExtResource("2_s3wn0")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bii4t"]
+shader = ExtResource("3_5i16p")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mnlls"]
+shader = ExtResource("4_fp5ux")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cax0a"]
+shader = ExtResource("5_oua02")
+shader_parameter/blue = null
+shader_parameter/a = null
+
+[node name="ShaderEditor" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8tcxs")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(720, 0)
+layout_mode = 2
+theme_override_constants/separation = -1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="FileButton" type="MenuButton" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+text = "文件"
+switch_on_hover = true
+item_count = 2
+popup/item_0/text = "保存当前"
+popup/item_0/id = 0
+popup/item_1/text = "保存所有"
+popup/item_1/id = 1
+
+[node name="ExampleButton" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+text = "示例"
+
+[node name="AboutButton" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+text = "关于"
+
+[node name="AboutPopupPanel" type="Window" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+title = "About"
+position = Vector2i(420, 280)
+size = Vector2i(600, 400)
+visible = false
+
+[node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/HBoxContainer/AboutPopupPanel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "hello world"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TabContainer" type="TabContainer" parent="HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/side_margin = 0
+
+[node name="Main" parent="HBoxContainer/VBoxContainer/TabContainer" instance=ExtResource("2_xgfi2")]
+layout_mode = 2
+
+[node name="VSplitContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="MainCanvas" type="ColorRect" parent="HBoxContainer/VSplitContainer"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_62icj")
+custom_minimum_size = Vector2(0, 720)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/VSplitContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 5
+
+[node name="BottomCanvas0" type="ColorRect" parent="HBoxContainer/VSplitContainer/HBoxContainer"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_bii4t")
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BottomCanvas1" type="ColorRect" parent="HBoxContainer/VSplitContainer/HBoxContainer"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_mnlls")
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BottomCanvas2" type="ColorRect" parent="HBoxContainer/VSplitContainer/HBoxContainer"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_cax0a")
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/AboutButton" to="." method="_on_about_button_pressed"]
+[connection signal="close_requested" from="HBoxContainer/VBoxContainer/HBoxContainer/AboutPopupPanel" to="." method="_on_about_popup_panel_close_requested"]
+[connection signal="size_changed" from="HBoxContainer/VBoxContainer/HBoxContainer/AboutPopupPanel" to="." method="_on_about_popup_panel_size_changed"]

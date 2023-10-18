@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8fg05q83y28k"]
+
+[ext_resource type="Script" path="res://scenes/main_editor.gd" id="1_bgpi7"]
+
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_pt7ic"]
+number_color = Color(0.631373, 1, 0.878431, 1)
+symbol_color = Color(0.560784, 0.654902, 0.827451, 1)
+function_color = Color(0.341176, 0.698039, 1, 1)
+member_variable_color = Color(0.619608, 0.733333, 0.831373, 1)
+
+[node name="Main" type="CodeEdit"]
+text = "shader_type canvas_item;
+
+void fragment() {
+	vec4 color = vec4(0.3, 0.1, 0.2, 1.0);
+	COLOR = color;
+}"
+wrap_mode = 1
+highlight_all_occurrences = true
+highlight_current_line = true
+syntax_highlighter = SubResource("CodeHighlighter_pt7ic")
+scroll_smooth = true
+scroll_v_scroll_speed = 100.0
+minimap_draw = true
+minimap_width = 120
+caret_blink = true
+caret_blink_interval = 0.5
+line_folding = true
+gutters_draw_line_numbers = true
+gutters_draw_fold_gutter = true
+code_completion_enabled = true
+indent_use_spaces = true
+indent_automatic = true
+auto_brace_completion_enabled = true
+auto_brace_completion_highlight_matching = true
+script = ExtResource("1_bgpi7")
+
+[connection signal="code_completion_requested" from="." to="." method="_on_code_completion_requested"]
+[connection signal="text_changed" from="." to="." method="_on_text_changed"]
