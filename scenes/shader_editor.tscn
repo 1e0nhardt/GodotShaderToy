@@ -109,6 +109,24 @@ text = "hello world"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="SaveFileDialog" type="FileDialog" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+position = Vector2i(470, 180)
+size = Vector2i(500, 600)
+ok_button_text = "Save"
+access = 2
+show_hidden_files = true
+
+[node name="OpenFileDialog" type="FileDialog" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+title = "Open a File"
+position = Vector2i(470, 180)
+size = Vector2i(500, 600)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+show_hidden_files = true
+
 [node name="TabContainer" type="TabContainer" parent="HBoxContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -117,23 +135,54 @@ theme_override_constants/side_margin = 0
 
 [node name="Main" parent="HBoxContainer/VBoxContainer/TabContainer" instance=ExtResource("2_xgfi2")]
 layout_mode = 2
+text = "shader_type canvas_item;
+
+uniform vec2 mouse_pos;
+
+void fragment() {
+    COLOR = vec4(mouse_pos, 1., 1.);
+}
+"
 
 [node name="Bottom0" parent="HBoxContainer/VBoxContainer/TabContainer" instance=ExtResource("2_xgfi2")]
 visible = false
 layout_mode = 2
+text = "shader_type canvas_item;
+
+uniform vec2 mouse_pos;
+
+void fragment() {
+    COLOR = vec4(mouse_pos, 1., 1.);
+}
+
+"
 syntax_highlighter = SubResource("CodeHighlighter_5pqar")
-delimiter_strings = Array[String](["\" \"", "' '"])
 
 [node name="Bottom1" parent="HBoxContainer/VBoxContainer/TabContainer" instance=ExtResource("2_xgfi2")]
 visible = false
 layout_mode = 2
+text = "shader_type canvas_item;
+
+uniform vec2 mouse_pos;
+
+void fragment() {
+    COLOR = vec4(mouse_pos, 1., 1.);
+}
+"
 syntax_highlighter = SubResource("CodeHighlighter_05j52")
 
 [node name="Bottom2" parent="HBoxContainer/VBoxContainer/TabContainer" instance=ExtResource("2_xgfi2")]
 visible = false
 layout_mode = 2
+text = "shader_type canvas_item;
+
+uniform vec2 mouse_pos;
+
+void fragment() {
+    COLOR = vec4(mouse_pos, 1., 1.);
+}
+"
 syntax_highlighter = SubResource("CodeHighlighter_e1iyw")
-delimiter_strings = Array[String](["\" \"", "' '"])
 
 [node name="VSplitContainer" type="VBoxContainer" parent="HBoxContainer"]
 layout_mode = 2
@@ -175,3 +224,5 @@ script = ExtResource("4_m23do")
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/HBoxContainer/AboutButton" to="." method="_on_about_button_pressed"]
 [connection signal="close_requested" from="HBoxContainer/VBoxContainer/HBoxContainer/AboutPopupPanel" to="." method="_on_about_popup_panel_close_requested"]
 [connection signal="size_changed" from="HBoxContainer/VBoxContainer/HBoxContainer/AboutPopupPanel" to="." method="_on_about_popup_panel_size_changed"]
+[connection signal="file_selected" from="HBoxContainer/VBoxContainer/HBoxContainer/SaveFileDialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="file_selected" from="HBoxContainer/VBoxContainer/HBoxContainer/OpenFileDialog" to="." method="_on_file_dialog_file_selected"]

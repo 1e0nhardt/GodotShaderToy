@@ -1,12 +1,14 @@
 extends CodeEdit
 
 const shader_highlight_file = "res://resources/syntax_highlighter/shader_highlight.json"
-const snippets_file = "res://resources/syntax_highlighter/shader_highlight.json"
+const snippets_file = "res://resources/snippets/godot_shader_snippet.json"
+
+var snippet_dict = load_json_file(snippets_file)
 
 
 func _ready():
     var json_dict = load_json_file(shader_highlight_file)
-    print(json_dict.keys())
+
     for color_string in json_dict:
         if not json_dict[color_string] is Array:
             continue
@@ -27,31 +29,33 @@ func load_json_file(filepath: String):
         if error == OK:
             return json.data
         else:
-            print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
+            Logger.error("JSON Parse Error: " + json.get_error_message() + " in " + json_string + " at line " + json.get_error_line())
     else:
-        print("File not exists: %s" % filepath)
+        Logger.error("File not exists: %s" % filepath)
 
 
 func get_current_word():
     var current_line := get_line(get_caret_line())
-    return current_line.substr(0, get_caret_column()).split(" ")[-1]
+    return current_line.substr(0, get_caret_column()).split(" ")[-1].split("(")[-1]
 
 
 func update_current_completion_options(word: String):
-    print("current word: ", word)
+    # Logger.info("current word: ", word)
     if word == "":
-        print(get_code_completion_options())
+        return
     else:
-        add_code_completion_option(CodeCompletionKind.KIND_PLAIN_TEXT, "hell", "hello", Color.GRAY)
-        add_code_completion_option(CodeCompletionKind.KIND_PLAIN_TEXT, "worl", "world", Color.GRAY)
+        for key in snippet_dict["keywords"]:
+            if key.match(word + "*"):
+                add_code_completion_option(CodeCompletionKind.KIND_PLAIN_TEXT, key, key, Color.GRAY)
+        for key in snippet_dict["snippets"]:
+            if key.match(word + "*"):
+                add_code_completion_option(CodeCompletionKind.KIND_PLAIN_TEXT, key + "□", snippet_dict["snippets"][key], Color.GRAY)
         update_code_completion_options(true)
 
 
-func _on_code_completion_requested():
-    print("Code completion Requested")
-
-
 func _on_text_changed():
-    # print(text)
-    print(get_caret_line(), ":", get_caret_column())
+    # Logger.info(text)
+    # Logger.info(get_caret_line(), ":", get_caret_column())
     update_current_completion_options(get_current_word())
+    if not name.ends_with("*"):
+        name = name + " *"
