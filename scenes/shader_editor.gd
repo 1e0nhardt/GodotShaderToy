@@ -1,10 +1,10 @@
 extends Control
 
 const reset_filepath_list = [
-    "res://examples/templates/0.text",
-    "res://examples/templates/1.text",
-    "res://examples/templates/2.text",
-    "res://examples/templates/3.text"
+    "res://resources/examples/templates/0.text",
+    "res://resources/examples/templates/1.text",
+    "res://resources/examples/templates/2.text",
+    "res://resources/examples/templates/3.text"
 ]
 
 @onready var canvas_list = [%MainCanvas, %BottomCanvas0, %BottomCanvas1, %BottomCanvas2]
@@ -43,7 +43,14 @@ func sync_text(file_text: String, index: int):
 
 
 func load_tab_text(index: int):
-    var file_text = FileAccess.get_file_as_string(filepath_list[index])
+    var file_text = ""
+    if FileAccess.file_exists(filepath_list[index]):
+        file_text = FileAccess.get_file_as_string(filepath_list[index])
+    else:
+        file_text = FileAccess.get_file_as_string(reset_filepath_list[index])
+        var f = FileAccess.open(filepath_list[index], FileAccess.WRITE)
+        f.store_string(file_text)
+    # Logger.debug("File: ", file_text)
     sync_text(file_text, index)
 
 
@@ -98,6 +105,8 @@ func change_tab_name(path):
         tab_name = tab_name + " " + path.split("/")[-1].split(".")[0]
     tab_container.get_child(tab_container.current_tab).name = tab_name
 
+    filepath_list[tab_container.current_tab] = path
+
 
 func on_id_pressed(id: int):
     if id == 0:
@@ -133,14 +142,15 @@ func _on_file_dialog_file_selected(path):
         return
 
     var current_tab_index = tab_container.current_tab
-    filepath_list[current_tab_index] = path
 
+    # 另存为
     if trigger_file_popup_id == 2:
         var f = FileAccess.open(path, FileAccess.WRITE)
         f.store_string(tab_container.get_child(current_tab_index).text)
         canvas_list[current_tab_index].material.shader.code = tab_container.get_child(current_tab_index).text
         change_tab_name(path)
 
+    # 打开
     elif trigger_file_popup_id == 5:
         Logger.info("Loading: ", path)
         load_file(path)

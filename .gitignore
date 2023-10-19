@@ -1,5 +1,7 @@
 # Godot 4+ specific ignores
 .godot/
+game.log
+resources/temp_files/**
 
 # Godot-specific ignores
 .import/
