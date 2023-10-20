@@ -7,6 +7,6 @@ shader_type canvas_item;
 uniform vec2 mouse_pos;
 
 void fragment() {
-	vec4 color = vec4(sin(TIME * 2.), cos(TIME), 1.0, 1.0);
+	vec4 color = vec4(sin(TIME), cos(TIME), 0.5, 1.0);
 	COLOR = color;
 }

@@ -1,12 +1,12 @@
 [gd_scene load_steps=15 format=3 uid="uid://dvodfxx4ty3io"]
 
 [ext_resource type="Script" path="res://scenes/shader_editor.gd" id="1_8tcxs"]
-[ext_resource type="Shader" path="res://resources/main_canvas.gdshader" id="2_s3wn0"]
 [ext_resource type="PackedScene" uid="uid://b8fg05q83y28k" path="res://scenes/main_editor.tscn" id="2_xgfi2"]
-[ext_resource type="Shader" path="res://resources/bottom0.gdshader" id="3_5i16p"]
-[ext_resource type="Shader" path="res://resources/bottom1.gdshader" id="4_fp5ux"]
+[ext_resource type="Shader" path="res://resources/shader_placeholder/main_canvas.gdshader" id="3_l8g0r"]
 [ext_resource type="Script" path="res://scenes/shader_canvas.gd" id="4_m23do"]
-[ext_resource type="Shader" path="res://resources/bottom2.gdshader" id="5_oua02"]
+[ext_resource type="Shader" path="res://resources/shader_placeholder/bottom0.gdshader" id="5_0et8n"]
+[ext_resource type="Shader" path="res://resources/shader_placeholder/bottom1.gdshader" id="6_7tiwg"]
+[ext_resource type="Shader" path="res://resources/shader_placeholder/bottom2.gdshader" id="7_wabf2"]
 
 [sub_resource type="CodeHighlighter" id="CodeHighlighter_5pqar"]
 number_color = Color(0.631373, 1, 0.878431, 1)
@@ -27,19 +27,19 @@ function_color = Color(0.341176, 0.698039, 1, 1)
 member_variable_color = Color(0.619608, 0.733333, 0.831373, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_62icj"]
-shader = ExtResource("2_s3wn0")
+shader = ExtResource("3_l8g0r")
 shader_parameter/mouse_pos = null
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bii4t"]
-shader = ExtResource("3_5i16p")
+shader = ExtResource("5_0et8n")
 shader_parameter/mouse_pos = null
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mnlls"]
-shader = ExtResource("4_fp5ux")
+shader = ExtResource("6_7tiwg")
 shader_parameter/mouse_pos = null
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cax0a"]
-shader = ExtResource("5_oua02")
+shader = ExtResource("7_wabf2")
 shader_parameter/mouse_pos = null
 
 [node name="ShaderEditor" type="Control"]
@@ -78,13 +78,6 @@ size_flags_vertical = 4
 text = "文件"
 switch_on_hover = true
 
-[node name="ExampleButton" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
-custom_minimum_size = Vector2(80, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 4
-text = "示例"
-
 [node name="AboutButton" type="Button" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
@@ -105,7 +98,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "hello world"
+text = "一个简单的Godot Shader编辑器。
+使用uniform vec2 mouse_pos获取鼠标在画布上的位置。"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -115,6 +109,7 @@ position = Vector2i(470, 180)
 size = Vector2i(500, 600)
 ok_button_text = "Save"
 access = 2
+filters = PackedStringArray("*.gdshader")
 show_hidden_files = true
 
 [node name="OpenFileDialog" type="FileDialog" parent="HBoxContainer/VBoxContainer/HBoxContainer"]
@@ -125,6 +120,7 @@ size = Vector2i(500, 600)
 ok_button_text = "Open"
 file_mode = 0
 access = 2
+filters = PackedStringArray("*.gdshader")
 show_hidden_files = true
 
 [node name="TabContainer" type="TabContainer" parent="HBoxContainer/VBoxContainer"]

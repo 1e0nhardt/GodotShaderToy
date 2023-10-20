@@ -7,6 +7,7 @@ var snippet_dict = load_json_file(snippets_file)
 
 
 func _ready():
+    # 语法高亮
     var json_dict = load_json_file(shader_highlight_file)
 
     for color_string in json_dict:

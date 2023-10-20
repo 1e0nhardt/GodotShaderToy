@@ -1,12 +1,13 @@
 extends Control
 
 const RESET_FILEPATH_LIST = [
-    "res://resources/examples/templates/0.text",
-    "res://resources/examples/templates/1.text",
-    "res://resources/examples/templates/2.text",
-    "res://resources/examples/templates/3.text"
+    "res://resources/examples/templates/0.gdshader",
+    "res://resources/examples/templates/1.gdshader",
+    "res://resources/examples/templates/2.gdshader",
+    "res://resources/examples/templates/3.gdshader"
 ]
 const TEMP_SHADER_FILEPATH = "res://resources/temp_files/temp.frag"
+const EXAMPLES_DIR = "res://resources/examples/"
 
 @onready var canvas_list = [%MainCanvas, %BottomCanvas0, %BottomCanvas1, %BottomCanvas2]
 @onready var file_popup: MenuButton = %FileMenu
@@ -16,26 +17,39 @@ const TEMP_SHADER_FILEPATH = "res://resources/temp_files/temp.frag"
 @onready var error_output = %ErrorOutput
 
 var filepath_list = [
-    "res://resources/temp_files/0.text",
-    "res://resources/temp_files/1.text",
-    "res://resources/temp_files/2.text",
-    "res://resources/temp_files/3.text"
+    "res://resources/temp_files/0.gdshader",
+    "res://resources/temp_files/1.gdshader",
+    "res://resources/temp_files/2.gdshader",
+    "res://resources/temp_files/3.gdshader"
+]
+var current_filepath_list = [
+    "res://resources/temp_files/0.gdshader",
+    "res://resources/temp_files/1.gdshader",
+    "res://resources/temp_files/2.gdshader",
+    "res://resources/temp_files/3.gdshader"
 ]
 var trigger_file_popup_id = -1
 var glsl_error_infomation = []
 var glslang_path
 
 
+func _notification(what):
+    if what == NOTIFICATION_WM_CLOSE_REQUEST:
+        save_all_file()
+        get_tree().quit()
+
+
 func _ready():
     glslang_path = ProjectSettings.globalize_path("res://glslang/bin/glslang.exe")
 
     # 设置菜单栏
+    file_popup.get_popup().add_item("打开文件", 5, KEY_MASK_CTRL | KEY_O)
     file_popup.get_popup().add_item("保存当前", 0, KEY_MASK_CTRL | KEY_S)
-    file_popup.get_popup().add_item("保存所有", 1, KEY_MASK_CTRL | KEY_MASK_ALT | KEY_S)
     file_popup.get_popup().add_item("另存为", 2, KEY_MASK_CTRL | KEY_MASK_SHIFT | KEY_S)
+    file_popup.get_popup().add_item("保存所有", 1, KEY_MASK_CTRL | KEY_MASK_ALT | KEY_S)
     file_popup.get_popup().add_item("重置当前", 3, KEY_MASK_CTRL | KEY_R)
     file_popup.get_popup().add_item("重置所有", 4, KEY_MASK_CTRL | KEY_MASK_ALT | KEY_R)
-    file_popup.get_popup().add_item("打开文件", 5, KEY_MASK_CTRL | KEY_O)
+    file_popup.get_popup().add_item("退出", 6, KEY_MASK_CTRL | KEY_Q)
     file_popup.get_popup().id_pressed.connect(on_id_pressed)
 
     # 加载临时shader文件
@@ -62,15 +76,16 @@ func load_tab_text(index: int):
 
 func load_file(path: String):
     var file_text = FileAccess.get_file_as_string(path)
+    current_filepath_list[tab_container.current_tab] = path
     sync_text(file_text, tab_container.current_tab)
 
 
 func converter(godot_shader_string: String):
-    var glsl_shader_string = "#ifdef GL_ES\nprecision mediump float;\n#endif\nuniform float u_time;\n"
+    var glsl_shader_string = "#ifdef GL_ES\nprecision mediump float;\n#endif\nuniform float u_time;\nuniform float u_resolution;\n"
     godot_shader_string = godot_shader_string.substr(godot_shader_string.find("//tag") + 5)
     godot_shader_string = godot_shader_string.replace("void fragment()", "void main()")
     godot_shader_string = godot_shader_string.replace("uniform vec2 mouse_pos;", "uniform vec2 u_mouse;")
-    godot_shader_string = godot_shader_string.replace("mouse_pose", "u_mouse")
+    godot_shader_string = godot_shader_string.replace("mouse_pos", "u_mouse")
     godot_shader_string = godot_shader_string.replace("TIME", "u_time")
     godot_shader_string = godot_shader_string.replace("UV", "gl_FragCoord.xy")
     godot_shader_string = godot_shader_string.replace("COLOR", "gl_FragColor")
@@ -79,15 +94,16 @@ func converter(godot_shader_string: String):
     godot_shader_string = godot_shader_string.replace("POINT_SIZE", "gl_PointSize")
     godot_shader_string = godot_shader_string.replace("POINT_COORD", "gl_PointCoord")
     godot_shader_string = godot_shader_string.replace("FRONT_FACING", "gl_FrontFacing")
+    godot_shader_string = godot_shader_string.replace("SCREEN_PIXEL_SIZE", "(1./u_resolution)")
     return glsl_shader_string + godot_shader_string
 
 
 func save_tab_text(index: int):
     var current_text = tab_container.get_child(index).text
     canvas_list[index].material.shader.code = current_text
-    var f = FileAccess.open(filepath_list[index], FileAccess.WRITE)
+    var f = FileAccess.open(current_filepath_list[index], FileAccess.WRITE)
     f.store_string(current_text)
-    Logger.info("Saving", filepath_list[index])
+    Logger.info("Saving", current_filepath_list[index])
 
     var ft = FileAccess.open(TEMP_SHADER_FILEPATH, FileAccess.WRITE)
     ft.store_string(converter(current_text))
@@ -120,6 +136,8 @@ func save_all_file():
 func reset_tab_text(index: int):
     var file_text = FileAccess.get_file_as_string(RESET_FILEPATH_LIST[index])
     sync_text(file_text, index)
+    current_filepath_list[index] = filepath_list[index]
+    change_tab_name("")
 
 
 func reset_current_file():
@@ -137,11 +155,11 @@ func change_tab_name(path):
     var tab_name = tab_container.get_child(tab_container.current_tab).name
     if tab_name.ends_with(" *"):
         tab_name = tab_name.left(-1) + path.split("/")[-1].split(".")[0]
+    elif path == "":
+        tab_name = tab_name.split(" ")[0]
     else:
         tab_name = tab_name + " " + path.split("/")[-1].split(".")[0]
     tab_container.get_child(tab_container.current_tab).name = tab_name
-
-    filepath_list[tab_container.current_tab] = path
 
 
 func on_id_pressed(id: int):
@@ -159,6 +177,9 @@ func on_id_pressed(id: int):
     elif id == 5:
         trigger_file_popup_id = 5
         open_file_dialog.popup()
+    elif id == 6:
+        save_all_file()
+        get_tree().quit()
 
 
 func _on_about_button_pressed():
