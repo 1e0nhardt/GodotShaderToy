@@ -5,6 +5,7 @@
         "radians","degrees","sin","cos","tan","asin","acos","atan","sinh","cosh","tanh","asinh","acosh","atanh","pow","exp","exp2","log","log2","sqrt","inversesqrt","abs","sign","floor","round","roundEven","trunc","ceil","fract","mod","modf","min","max","clamp","mix","fma","step","smoothstep","isnan","isinf","floatBitsToInt","floatBitsToUint","intBitsToFloat","uintBitsToFloat","length","distance","dot","cross","normalize","refract","faceforward","matrixCompMult","outerProduct","transpose","inverse","lessThan","greaterThan","lessThanEqual","greaterThanEqual","equal","notEqual","any","all","not","textureQueryLod","textureQueryLevels","texture","textureProj ","textureLod","textureProjLod ","textureGrad ","textureProjGrad ","texelFetch","textureGather ","dFdx ","dFdxCoarse ","dFdxFine ","dFdy","dFdyCoarse ","dFdyFine ","fwidth ","fwidthCoarse ","fwidthFine ","packHalf2x16 ","unpackHalf2x16 ","packUnorm2x16 ","unpackUnorm2x16 ","packSnorm2x16","unpackSnorm2x16","packUnorm4x8 ","unpackUnorm4x8 ","packSnorm4x8 ","unpackSnorm4x8 ","bitfieldExtract ","bitfieldInsert","bitfieldReverse ","bitCount ","findLSB ","findMSB ","imulExtended ","umulExtended ","uaddCarry ","usubBorrow ","ldexp ","frexp "
     ],
     "snippets": {
-        "mouse": "mouse_pos"
+        "mouse": "mouse_pos",
+        "rgb": "vec3 rgb(int r, int g, int b) { return vec3(float(r)/255., float(g)/255., float(b)/255.);}"
     }
 }

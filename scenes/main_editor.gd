@@ -100,9 +100,8 @@ func _on_gui_input(event:InputEvent):
         return
 
     if event is InputEventKey:
-        lines.update(text)
-
         if event.get_keycode_with_modifiers() == KEY_MASK_CTRL | KEY_SLASH and event.pressed:
+            lines.update(text)
             var raw_caret_line = get_caret_line()
             if has_selection():
                 # Logger.debug("Selection Line", get_selection_from_line())
@@ -114,7 +113,14 @@ func _on_gui_input(event:InputEvent):
             set_caret_line(raw_caret_line, true, false)
 
         elif event.get_keycode_with_modifiers() == KEY_MASK_ALT | KEY_MASK_SHIFT | KEY_DOWN and event.pressed:
+            lines.update(text)
             var raw_caret_line = get_caret_line()
             lines.copy_down(raw_caret_line)
             text = lines.get_text()
-            set_caret_line(raw_caret_line + 1, false)
+            set_caret_line(raw_caret_line + 1, true, false)
+
+        elif event.get_keycode_with_modifiers() == KEY_SEMICOLON and event.pressed:
+            # 按分号时直接跳转到行尾
+            if get_line(get_caret_line()).length() != get_caret_column():
+                set_caret_column(get_line(get_caret_line()).length())
+

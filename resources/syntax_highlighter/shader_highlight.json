@@ -17,6 +17,7 @@
         "hint_screen_texture",
         "hint_depth_texture",
         "hint_normal_roughness_texture",
+        "const",
 
         "bool",
         "bvec2",
