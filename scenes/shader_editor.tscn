@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://dvodfxx4ty3io"]
+[gd_scene load_steps=16 format=3 uid="uid://dvodfxx4ty3io"]
 
 [ext_resource type="Script" path="res://scenes/shader_editor.gd" id="1_8tcxs"]
 [ext_resource type="PackedScene" uid="uid://b8fg05q83y28k" path="res://scenes/main_editor.tscn" id="2_xgfi2"]
+[ext_resource type="FontFile" uid="uid://gpfkkjghkbcg" path="res://resources/Kreon-Regular.ttf" id="3_dtlel"]
 [ext_resource type="Shader" path="res://resources/shader_placeholder/main_canvas.gdshader" id="3_l8g0r"]
 [ext_resource type="Script" path="res://scenes/shader_canvas.gd" id="4_m23do"]
 [ext_resource type="Shader" path="res://resources/shader_placeholder/bottom0.gdshader" id="5_0et8n"]
@@ -99,7 +100,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "一个简单的Godot Shader编辑器。
-使用uniform vec2 mouse_pos获取鼠标在画布上的位置。"
+使用uniform vec2 mouse_pos获取鼠标在画布上的位置。
+快捷键:
+Ctrl+/: 注释/取消注释
+Alt+Shift+down: 向下复制一行"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -131,38 +135,43 @@ theme_override_constants/side_margin = 0
 
 [node name="Main" parent="HBoxContainer/VBoxContainer/TabContainer" instance=ExtResource("2_xgfi2")]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_dtlel")
+theme_override_font_sizes/font_size = 20
 text = "shader_type canvas_item;
 
 uniform vec2 mouse_pos;
 
 void fragment() {
-    COLOR = vec4(mouse_pos, 1., 1.);
+	COLOR = vec4(mouse_pos, 1., 1.);
 }
 "
 
 [node name="Bottom0" parent="HBoxContainer/VBoxContainer/TabContainer" instance=ExtResource("2_xgfi2")]
 visible = false
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_dtlel")
+theme_override_font_sizes/font_size = 20
 text = "shader_type canvas_item;
 
 uniform vec2 mouse_pos;
 
 void fragment() {
-    COLOR = vec4(mouse_pos, 1., 1.);
+	COLOR = vec4(mouse_pos, 1., 1.);
 }
-
 "
 syntax_highlighter = SubResource("CodeHighlighter_5pqar")
 
 [node name="Bottom1" parent="HBoxContainer/VBoxContainer/TabContainer" instance=ExtResource("2_xgfi2")]
 visible = false
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_dtlel")
+theme_override_font_sizes/font_size = 20
 text = "shader_type canvas_item;
 
 uniform vec2 mouse_pos;
 
 void fragment() {
-    COLOR = vec4(mouse_pos, 1., 1.);
+	COLOR = vec4(mouse_pos, 1., 1.);
 }
 "
 syntax_highlighter = SubResource("CodeHighlighter_05j52")
@@ -170,12 +179,14 @@ syntax_highlighter = SubResource("CodeHighlighter_05j52")
 [node name="Bottom2" parent="HBoxContainer/VBoxContainer/TabContainer" instance=ExtResource("2_xgfi2")]
 visible = false
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_dtlel")
+theme_override_font_sizes/font_size = 20
 text = "shader_type canvas_item;
 
 uniform vec2 mouse_pos;
 
 void fragment() {
-    COLOR = vec4(mouse_pos, 1., 1.);
+	COLOR = vec4(mouse_pos, 1., 1.);
 }
 "
 syntax_highlighter = SubResource("CodeHighlighter_e1iyw")

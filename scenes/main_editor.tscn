@@ -36,4 +36,7 @@ auto_brace_completion_highlight_matching = true
 script = ExtResource("1_bgpi7")
 
 [connection signal="code_completion_requested" from="." to="." method="_on_code_completion_requested"]
+[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_focus_exited"]
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="text_changed" from="." to="." method="_on_text_changed"]

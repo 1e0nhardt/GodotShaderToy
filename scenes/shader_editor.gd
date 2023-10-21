@@ -81,7 +81,7 @@ func load_file(path: String):
 
 
 func converter(godot_shader_string: String):
-    var glsl_shader_string = "#ifdef GL_ES\nprecision mediump float;\n#endif\nuniform float u_time;\nuniform float u_resolution;\n"
+    var glsl_shader_string = "#ifdef GL_ES\nprecision mediump float;\n#endif\nuniform float u_time;uniform float u_resolution;\nconst float PI = 3.1415926535;const float TAU = 3.1415926535;const float E = 2.718281828459045;\n"
     godot_shader_string = godot_shader_string.substr(godot_shader_string.find("//tag") + 5)
     godot_shader_string = godot_shader_string.replace("void fragment()", "void main()")
     godot_shader_string = godot_shader_string.replace("uniform vec2 mouse_pos;", "uniform vec2 u_mouse;")
