@@ -1,6 +1,6 @@
 # Godot 4+ specific ignores
 .godot/
 shaders/temp
-vendor/ffmepg
+vendor/ffmpeg
 Test
 assets/images
