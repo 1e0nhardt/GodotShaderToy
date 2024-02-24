@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://wvfllgl511r5"]
+
+[ext_resource type="Script" path="res://scenes/additional_function/jfa.gd" id="1_h1tok"]
+[ext_resource type="Material" uid="uid://cxp770lvfrvxq" path="res://scenes/additional_function/jfa.tres" id="2_m4ghd"]
+
+[node name="JFA" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_h1tok")
+mat = ExtResource("2_m4ghd")

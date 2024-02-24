@@ -1,0 +1,22 @@
+﻿keys,zh,en
+FILE,文件,File
+OPEN,打开,Open
+SAVE,保存,Save
+SAVE_AS,另存为,Save As
+LOAD_TEMPLATE,加载模板,Load Template
+QUIT,退出,Quit
+,,
+EDIT,编辑,Edit
+COMMENT,注释,Comment
+COPYDOWN,向下复制,Copydown
+ADD_CODE_REGION,添加代码区域,Add Code Region
+MOVE_UP,向上移动,Move Up
+MOVE_DOWN,向下移动,Move Down
+,,
+HELP,帮助,Help
+OPEN_USER,打开用户目录,Open User Data Folder
+LANGUAGE,语言,Language
+ZH,中文,Chinese
+EN,英语,English
+ABOUT,关于,About
+JFA_GEN,JFA预处理,JFA preprocess

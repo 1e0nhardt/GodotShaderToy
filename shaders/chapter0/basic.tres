@@ -1,0 +1,40 @@
+[gd_resource type="Resource" script_class="GodotShaderToyProject" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://resources/gstp.gd" id="1_oye2t"]
+
+[resource]
+script = ExtResource("1_oye2t")
+image_text = "shader_type canvas_item;
+//
+// uniform vec2 mouse_pos: 归一化后的鼠标位置，原点为左上角。
+// uniform vec2 iResolution: 画布分辨率。显示在左边 wxh。
+// uniform float iTime: 左边显示的时间，而非内置的TIME。 
+//
+//END
+uniform vec2 iResolution;
+uniform float iTime;
+
+void fragment() {
+	vec2 uv = vec2(UV.x, 1.-UV.y);
+    uv -= 0.5;
+    uv.x *= iResolution.x/iResolution.y;
+    vec2 p = uv;
+    float a = atan(p.y, p.x) * 5. + iTime;
+    float r = 0.3 + 0.3 * sin(iTime) * abs(fract(a / TAU)-.5);
+	vec3 col = vec3(0.);
+    
+    col += smoothstep(r + 0.005, r, length(p));
+//    col += step(0., uv.x * 1.);
+    
+	COLOR = vec4(col, 1.);
+}"
+common = "//
+//
+// uniform vec2 mouse_pos: 归一化后的鼠标位置，原点为左上角。
+// uniform vec2 iResolution: 画布分辨率。显示在左边 wxh。
+// uniform float iTime: 左边显示的时间，而非内置的TIME。 
+//
+//END
+float a(){
+    return 1.;
+}"

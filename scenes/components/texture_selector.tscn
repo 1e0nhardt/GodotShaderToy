@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://05a30i78hnfl"]
+
+[ext_resource type="Texture2D" uid="uid://dmaqkcakf6m02" path="res://icon.svg" id="1_k4c56"]
+[ext_resource type="Script" path="res://scenes/components/texture_selector.gd" id="2_puj56"]
+
+[node name="TextureSelector" type="TextureRect"]
+size_flags_horizontal = 3
+mouse_filter = 0
+texture = ExtResource("1_k4c56")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("2_puj56")
+
+[node name="OpenTextureDialog" type="FileDialog" parent="."]
+title = "Open a File"
+initial_position = 1
+size = Vector2i(600, 400)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.png")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="file_selected" from="OpenTextureDialog" to="." method="_on_open_texture_dialog_file_selected"]

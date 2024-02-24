@@ -1,0 +1,94 @@
+[gd_scene load_steps=10 format=3 uid="uid://xo5g40akdwkl"]
+
+[ext_resource type="Texture2D" uid="uid://dmaqkcakf6m02" path="res://icon.svg" id="1_3ejjy"]
+[ext_resource type="Script" path="res://scenes/components/editor_region.gd" id="1_fymlu"]
+[ext_resource type="FontVariation" uid="uid://cu1y3b7dw4uqd" path="res://assets/font/syht_jbmono.tres" id="2_nmg7y"]
+[ext_resource type="PackedScene" uid="uid://dtk611p1yg21u" path="res://scenes/components/shader_edit.tscn" id="3_j3pb6"]
+[ext_resource type="StyleBox" uid="uid://bw6rslsrfpc4x" path="res://themes/button_activate.tres" id="4_ml842"]
+[ext_resource type="StyleBox" uid="uid://dhfw7crcj7qxh" path="res://themes/button_hover.tres" id="5_nofnf"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yvus2"]
+bg_color = Color(0.113725, 0.133333, 0.160784, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7lm0a"]
+bg_color = Color(0.113725, 0.133333, 0.160784, 1)
+
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_k8kkf"]
+number_color = Color(0.631373, 1, 0.878431, 1)
+symbol_color = Color(0.560784, 0.654902, 0.827451, 1)
+function_color = Color(0.341176, 0.698039, 1, 1)
+member_variable_color = Color(0.619608, 0.733333, 0.831373, 1)
+
+[node name="EditorRegion" type="VBoxContainer"]
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.1
+script = ExtResource("1_fymlu")
+
+[node name="NameBar" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="AddBtn" type="TextureButton" parent="NameBar"]
+visible = false
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture_normal = ExtResource("1_3ejjy")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Common" type="Button" parent="NameBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 32)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_nmg7y")
+theme_override_styles/normal = ExtResource("4_ml842")
+theme_override_styles/hover = ExtResource("5_nofnf")
+theme_override_styles/pressed = ExtResource("4_ml842")
+theme_override_styles/focus = ExtResource("4_ml842")
+text = "Common
+"
+
+[node name="Image" type="Button" parent="NameBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(80, 32)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_nmg7y")
+theme_override_styles/normal = ExtResource("4_ml842")
+theme_override_styles/hover = ExtResource("5_nofnf")
+theme_override_styles/pressed = ExtResource("4_ml842")
+theme_override_styles/focus = ExtResource("4_ml842")
+text = "Image
+"
+
+[node name="HSeparator" type="HSeparator" parent="NameBar"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TitleLabel" type="Label" parent="NameBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_nmg7y")
+theme_override_font_sizes/font_size = 18
+text = "temp"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_yvus2")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+
+[node name="ShaderEdit" parent="PanelContainer/MarginContainer" instance=ExtResource("3_j3pb6")]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_7lm0a")
+theme_override_styles/focus = SubResource("StyleBoxFlat_7lm0a")
+syntax_highlighter = SubResource("CodeHighlighter_k8kkf")

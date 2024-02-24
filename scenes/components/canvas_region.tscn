@@ -1,0 +1,176 @@
+[gd_scene load_steps=14 format=3 uid="uid://dknw11nl1bs8q"]
+
+[ext_resource type="Shader" path="res://shaders/main_canvas.gdshader" id="1_5ldl2"]
+[ext_resource type="Script" path="res://scenes/components/canvas_region.gd" id="1_x5e8g"]
+[ext_resource type="PackedScene" uid="uid://05a30i78hnfl" path="res://scenes/components/texture_selector.tscn" id="3_15lyh"]
+[ext_resource type="Texture2D" uid="uid://2cl8pxxktrn5" path="res://assets/icons/icon-skip-previous.svg" id="3_iyvk5"]
+[ext_resource type="Texture2D" uid="uid://dlvywh6rfx50e" path="res://assets/icons/icon-screenshot.svg" id="4_nreju"]
+[ext_resource type="Texture2D" uid="uid://sk3j7o335brc" path="res://assets/icons/icon-pause.svg" id="4_owjca"]
+[ext_resource type="Texture2D" uid="uid://bfdikopercl6d" path="res://assets/icons/icon-maximize.svg" id="5_2jx0f"]
+[ext_resource type="Script" path="res://scenes/components/pause_btn.gd" id="5_rjs3b"]
+[ext_resource type="Texture2D" uid="uid://nr1hnsrvl4yy" path="res://assets/icons/video.svg" id="8_uxbtc"]
+[ext_resource type="Script" path="res://scenes/components/record_video_btn.gd" id="9_tw17y"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_nj4xo"]
+viewport_path = NodePath("MainViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_t5idj"]
+viewport_path = NodePath("BufferAViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_280wm"]
+shader = ExtResource("1_5ldl2")
+
+[node name="CanvasRegion" type="VBoxContainer"]
+offset_right = 723.0
+offset_bottom = 574.0
+size_flags_horizontal = 3
+script = ExtResource("1_x5e8g")
+
+[node name="MainCanvas" type="TextureRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.3
+texture = SubResource("ViewportTexture_nj4xo")
+expand_mode = 1
+
+[node name="BufferACanvas" type="TextureRect" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.1
+texture = SubResource("ViewportTexture_t5idj")
+expand_mode = 1
+
+[node name="MainViewport" type="SubViewport" parent="."]
+disable_3d = true
+handle_input_locally = false
+size = Vector2i(723, 403)
+render_target_update_mode = 4
+
+[node name="MainViewportCanvas" type="ColorRect" parent="MainViewport"]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_280wm")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BufferAViewport" type="SubViewport" parent="."]
+unique_name_in_owner = true
+render_target_update_mode = 0
+
+[node name="BufferAViewportCanvas" type="ColorRect" parent="BufferAViewport"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ToolBar" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="ResetBtn" type="TextureButton" parent="ToolBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+texture_normal = ExtResource("3_iyvk5")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="PauseBtn" type="TextureButton" parent="ToolBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+texture_normal = ExtResource("4_owjca")
+ignore_texture_size = true
+stretch_mode = 4
+script = ExtResource("5_rjs3b")
+
+[node name="TimeLabel" type="Label" parent="ToolBar"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "0.0"
+vertical_alignment = 1
+
+[node name="FpsLabel" type="Label" parent="ToolBar"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "60.0
+"
+vertical_alignment = 1
+
+[node name="SizeLabel" type="Label" parent="ToolBar"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "800x600
+"
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="ToolBar"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="TitleLabel" type="Label" parent="ToolBar"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="HSeparator2" type="HSeparator" parent="ToolBar"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="ScreenShotBtn" type="TextureButton" parent="ToolBar"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+texture_normal = ExtResource("4_nreju")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="RecordVideoBtn" type="TextureButton" parent="ToolBar"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+texture_normal = ExtResource("8_uxbtc")
+ignore_texture_size = true
+stretch_mode = 4
+script = ExtResource("9_tw17y")
+
+[node name="FullScreenBtn" type="TextureButton" parent="ToolBar"]
+custom_minimum_size = Vector2(28, 28)
+layout_mode = 2
+texture_normal = ExtResource("5_2jx0f")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="TextureChannels" type="HBoxContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextureChannel" parent="TextureChannels" instance=ExtResource("3_15lyh")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="TextureChannel2" parent="TextureChannels" instance=ExtResource("3_15lyh")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="TextureChannel3" parent="TextureChannels" instance=ExtResource("3_15lyh")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="TextureChannel4" parent="TextureChannels" instance=ExtResource("3_15lyh")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="pressed" from="ToolBar/PauseBtn" to="ToolBar/PauseBtn" method="_on_pressed"]
+[connection signal="pressed" from="ToolBar/RecordVideoBtn" to="ToolBar/RecordVideoBtn" method="_on_pressed"]

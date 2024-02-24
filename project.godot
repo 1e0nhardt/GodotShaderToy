@@ -1,0 +1,37 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="GodotShaderToy"
+run/main_scene="res://scenes/application.tscn"
+config/features=PackedStringArray("4.2", "Forward Plus")
+config/icon="res://icon.svg"
+
+[autoload]
+
+Logger="*res://autoloads/logger.gd"
+Helper="*res://autoloads/helper.gd"
+EventBus="*res://autoloads/event_bus.gd"
+
+[debug]
+
+gdscript/warnings/int_as_enum_without_cast=0
+gdscript/warnings/int_as_enum_without_match=0
+
+[display]
+
+window/size/viewport_width=1366
+window/size/viewport_height=768
+window/size/borderless=true
+
+[internationalization]
+
+locale/translations=PackedStringArray("res://translation/GodotShaderToy_Translation.en.translation", "res://translation/GodotShaderToy_Translation.zh.translation")

@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cjjijq2cky8qc"]
+
+[ext_resource type="FontVariation" uid="uid://bcpktw644umxw" path="res://assets/font/dyh_jbmono.tres" id="1_hxmeq"]
+
+[resource]
+default_font = ExtResource("1_hxmeq")

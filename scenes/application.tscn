@@ -1,0 +1,251 @@
+[gd_scene load_steps=17 format=3 uid="uid://c1qe8ojav7xp4"]
+
+[ext_resource type="Script" path="res://scenes/components/handles.gd" id="1_3tgaa"]
+[ext_resource type="Script" path="res://scenes/application.gd" id="1_8s454"]
+[ext_resource type="PackedScene" uid="uid://wvfllgl511r5" path="res://scenes/additional_function/jfa.tscn" id="2_2g0fu"]
+[ext_resource type="Texture2D" uid="uid://dmaqkcakf6m02" path="res://icon.svg" id="2_isobq"]
+[ext_resource type="Texture2D" uid="uid://dygo4t63gvjjy" path="res://assets/icons/minus-bold-small.svg" id="3_2h1qy"]
+[ext_resource type="PackedScene" uid="uid://dknw11nl1bs8q" path="res://scenes/components/canvas_region.tscn" id="3_8in5t"]
+[ext_resource type="Shader" path="res://shaders/main_canvas.gdshader" id="3_pm47k"]
+[ext_resource type="Texture2D" uid="uid://b5hn5som6513v" path="res://assets/icons/icon-max-small.svg" id="3_x5nqg"]
+[ext_resource type="Script" path="res://scenes/components/main_canvas.gd" id="4_2ar1e"]
+[ext_resource type="PackedScene" uid="uid://xo5g40akdwkl" path="res://scenes/components/editor_region.tscn" id="4_frqnd"]
+[ext_resource type="Texture2D" uid="uid://c3uogjfddee38" path="res://assets/icons/icon-close-small.svg" id="5_6o5x4"]
+[ext_resource type="PackedScene" uid="uid://onm5iovbmy4q" path="res://scenes/popups/popup_panel.tscn" id="12_16v75"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v1ojb"]
+bg_color = Color(0.113725, 0.133333, 0.160784, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g2orq"]
+bg_color = Color(0.113725, 0.133333, 0.160784, 1)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_r13nf"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v4io1"]
+shader = ExtResource("3_pm47k")
+
+[node name="Application" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8s454")
+jfa_scene = ExtResource("2_2g0fu")
+metadata/_edit_lock_ = true
+
+[node name="AppContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 0
+
+[node name="TopBar" type="PanelContainer" parent="AppContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_v1ojb")
+
+[node name="MarginContainer" type="MarginContainer" parent="AppContainer/TopBar"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="AppContainer/TopBar/MarginContainer"]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="AppContainer/TopBar/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("2_isobq")
+expand_mode = 1
+
+[node name="FileMenu" type="MenuButton" parent="AppContainer/TopBar/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "FILE"
+switch_on_hover = true
+
+[node name="EditMenu" type="MenuButton" parent="AppContainer/TopBar/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "EDIT"
+switch_on_hover = true
+
+[node name="HelpMenu" type="MenuButton" parent="AppContainer/TopBar/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "HELP"
+switch_on_hover = true
+
+[node name="HSeparator" type="HSeparator" parent="AppContainer/TopBar/MarginContainer/HBoxContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Min" type="TextureButton" parent="AppContainer/TopBar/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture_normal = ExtResource("3_2h1qy")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Max" type="TextureButton" parent="AppContainer/TopBar/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture_normal = ExtResource("3_x5nqg")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Close" type="TextureButton" parent="AppContainer/TopBar/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture_normal = ExtResource("5_6o5x4")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="MainContainer" type="PanelContainer" parent="AppContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_g2orq")
+
+[node name="MarginContainer" type="MarginContainer" parent="AppContainer/MainContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = 3
+
+[node name="HSplitContainer" type="HSplitContainer" parent="AppContainer/MainContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 6
+theme_override_icons/grabber = SubResource("PlaceholderTexture2D_r13nf")
+
+[node name="CanvasRegion" parent="AppContainer/MainContainer/MarginContainer/HSplitContainer" instance=ExtResource("3_8in5t")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="EditorRegion" parent="AppContainer/MainContainer/MarginContainer/HSplitContainer" instance=ExtResource("4_frqnd")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="FullScreenCanvas" type="ColorRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_v4io1")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_2ar1e")
+
+[node name="Handles" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_3tgaa")
+metadata/_edit_lock_ = true
+
+[node name="Right" type="Control" parent="Handles"]
+custom_minimum_size = Vector2(6, 0)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -6.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_default_cursor_shape = 15
+
+[node name="Bottom" type="Control" parent="Handles"]
+custom_minimum_size = Vector2(0, 6)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_default_cursor_shape = 14
+
+[node name="Corner" type="Control" parent="Handles"]
+custom_minimum_size = Vector2(8, 8)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -6.0
+offset_top = -6.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_default_cursor_shape = 12
+
+[node name="SaveFileDialog" type="FileDialog" parent="."]
+unique_name_in_owner = true
+initial_position = 1
+size = Vector2i(600, 400)
+access = 2
+filters = PackedStringArray("*.res")
+
+[node name="OpenFileDialog" type="FileDialog" parent="."]
+unique_name_in_owner = true
+title = "Open a File"
+initial_position = 1
+size = Vector2i(600, 400)
+ok_button_text = "Open"
+file_mode = 0
+access = 2
+filters = PackedStringArray("*.res")
+
+[node name="PopupLayer" type="CanvasLayer" parent="."]
+layer = 2
+visible = false
+
+[node name="Mask" type="ColorRect" parent="PopupLayer"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 0.858824, 0.364706)
+
+[node name="PopupPanel" parent="PopupLayer" instance=ExtResource("12_16v75")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -208.0
+offset_top = -109.5
+offset_right = 208.0
+offset_bottom = 109.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[connection signal="gui_input" from="AppContainer/TopBar" to="." method="_on_top_bar_gui_input"]
+[connection signal="pressed" from="AppContainer/TopBar/MarginContainer/HBoxContainer/Min" to="." method="_on_min_pressed"]
+[connection signal="pressed" from="AppContainer/TopBar/MarginContainer/HBoxContainer/Max" to="." method="_on_max_pressed"]
+[connection signal="pressed" from="AppContainer/TopBar/MarginContainer/HBoxContainer/Close" to="." method="_on_close_pressed"]
+[connection signal="gui_input" from="FullScreenCanvas" to="." method="_on_panel_gui_input"]
+[connection signal="gui_input" from="Handles/Right" to="Handles" method="_on_right_gui_input"]
+[connection signal="gui_input" from="Handles/Bottom" to="Handles" method="_on_bottom_gui_input"]
+[connection signal="gui_input" from="Handles/Corner" to="Handles" method="_on_corner_gui_input"]
+[connection signal="file_selected" from="SaveFileDialog" to="." method="_on_save_file_dialog_file_selected"]
+[connection signal="file_selected" from="OpenFileDialog" to="." method="_on_open_file_dialog_file_selected"]
